@@ -22,10 +22,7 @@ module.exports = (entry, stringify, cb) => {
 
     try {
       let bundlePath = path.join(config.output.path, config.output.filename);
-      const result = requireNoCache(bundlePath);
-
-      let resultPath = path.join(config.output.path, 'produced.bemjson.json');
-      fs.writeFileSync(resultPath, JSON.stringify(result, null, 2));
+      const result = fs.readFileSync(bundlePath);
 
       cb(result);
     } catch (e) {
