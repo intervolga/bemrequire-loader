@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const expect = require('expect.js');
 const runWebpack = require('./helpers/run-webpack');
+const watchWebpack = require('./helpers/watch-webpack');
 
 describe('webpack test config', () => {
   it('should accept css require', () => {
@@ -45,6 +46,46 @@ describe('bemrequire-loader', () => {
       const message = error.toString();
       expect(message).to.contain('_popup/datepicker_popup.scss');
     });
+  });
+
+  it('should invalidate cache when asset changed', function(done) {
+    this.timeout(30000); // eslint-disable-line no-invalid-this
+
+    const paths = getCasePaths('asset-changed');
+
+    const source = path.join(__dirname, 'levels', 'blocks.common',
+      'change-asset', 'change-asset.css');
+    const original = path.join(__dirname, 'levels', 'blocks.common',
+      'change-asset', 'change-asset_original.css');
+    const changed = path.join(__dirname, 'levels', 'blocks.common',
+      'change-asset', 'change-asset_changed.css');
+
+    fs.writeFileSync(source, fs.readFileSync(original));
+
+    let firstRun = false;
+    let firstTimerId = null;
+    const cb = (result) => {
+      expect(typeof result).to.be.a('string');
+
+      if (!firstRun) {
+        if (firstTimerId) {
+          clearTimeout(firstTimerId);
+        }
+
+        firstTimerId = setTimeout(() => {
+          expect(result.toString()).to.contain('background: white;');
+          firstRun = true;
+          fs.writeFileSync(source, fs.readFileSync(changed));
+        }, 5000);
+      } else {
+        setTimeout(() => {
+          expect(result.toString()).to.contain('background: black;');
+          done();
+        }, 5000);
+      }
+    };
+
+    watchWebpack(paths.source, true, cb);
   });
 });
 
