@@ -102,7 +102,7 @@ function getCasePaths(caseName) {
     'expected': path.join(__dirname, 'cases', caseName,
       'expected.bemjson.json'),
     'out_produced': path.join(__dirname, 'cases', caseName,
-      'source.html'),
+      'source.bemjson.html'),
     'out_expected': path.join(__dirname, 'cases', caseName,
       'expected.html'),
   };
