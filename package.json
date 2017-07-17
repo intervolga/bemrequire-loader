@@ -1,15 +1,15 @@
 {
-  "name": "intervolga-bemrequire-loader",
+  "name": "@intervolga/bemrequire-loader",
   "version": "1.0.0",
-  "description": "BemRequire loader for WebPack 2",
+  "description": "BEM ASSETS loader for WebPack 2+",
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js lib test/index.js test/helpers",
-    "test": "mocha --ui tdd test/"
+    "test": "npm run lint && mocha --ui tdd test/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shkarupa-alex/bemrequire-loader.git"
+    "url": "git+https://github.com/intervolga/bemrequire-loader.git"
   },
   "keywords": [
     "bemrequire",
@@ -19,32 +19,32 @@
   "author": "Shkarupa Alex",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shkarupa-alex/bemrequire-loader/issues"
+    "url": "https://github.com/intervolga/bemrequire-loader/issues"
   },
-  "homepage": "https://github.com/shkarupa-alex/bemrequire-loader#readme",
+  "homepage": "https://github.com/intervolga/bemrequire-loader#readme",
   "peerDependencies": {
-    "webpack": "^2.0.0"
+    "webpack": "^3.0.0"
   },
   "dependencies": {
     "loader-utils": "^1.1.0",
     "node-eval": "^1.1.0"
   },
   "devDependencies": {
+    "@intervolga/bembh-loader": "^1.1.0",
+    "@intervolga/bemdeps-loader": "^1.1.0",
+    "@intervolga/bemfs-loader": "^1.1.0",
+    "@intervolga/bemjson-loader": "^1.1.0",
     "css-loader": "^0.28.4",
     "eslint": "^3.19.0",
     "eslint-config-google": "^0.7.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
     "expect.js": "^0.3.1",
-    "intervolga-bembh-loader": "git+https://github.com/shkarupa-alex/bembh-loader.git",
-    "intervolga-bemdeps-loader": "git+https://github.com/shkarupa-alex/bemdeps-loader.git",
-    "intervolga-bemfs-loader": "git+https://github.com/shkarupa-alex/bemfs-loader.git",
-    "intervolga-bemjson-loader": "git+https://github.com/shkarupa-alex/bemjson-loader.git",
-    "mocha": "^3.3.0",
+    "mocha": "^3.4.2",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
-    "webpack": "^2.7.0"
+    "webpack": "^3.3.0"
   },
   "files": [
     "lib",
