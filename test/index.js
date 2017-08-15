@@ -1,4 +1,5 @@
 const fs = require('fs');
+const fse = require('fs-extra');
 const path = require('path');
 const expect = require('expect.js');
 const runWebpack = require('./helpers/run-webpack');
@@ -60,7 +61,7 @@ describe('bemrequire-loader', () => {
     const changed = path.join(__dirname, 'levels', 'blocks.common',
       'change-asset', 'change-asset_changed.css');
 
-    fs.writeFileSync(source, fs.readFileSync(original));
+    fse.copySync(original, source);
 
     let firstRun = false;
     let firstTimerId = null;
@@ -75,7 +76,7 @@ describe('bemrequire-loader', () => {
         firstTimerId = setTimeout(() => {
           expect(result.toString()).to.contain('background: white;');
           firstRun = true;
-          fs.writeFileSync(source, fs.readFileSync(changed));
+          fse.copySync(changed, source);
         }, 5000);
       } else {
         setTimeout(() => {
@@ -85,7 +86,7 @@ describe('bemrequire-loader', () => {
       }
     };
 
-    watchWebpack(paths.source, true, cb);
+    watchWebpack(paths.source, cb);
   });
 });
 
