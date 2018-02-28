@@ -65,6 +65,7 @@ describe('bemrequire-loader', () => {
 
     let firstRun = false;
     let firstTimerId = null;
+    let watching;
     const cb = (result) => {
       expect(typeof result).to.be.a('string');
 
@@ -80,13 +81,14 @@ describe('bemrequire-loader', () => {
         }, 5000);
       } else {
         setTimeout(() => {
+          watching && watching.close();
           expect(result.toString()).to.contain('background: black;');
           done();
         }, 5000);
       }
     };
 
-    watchWebpack(paths.source, cb);
+    watching =watchWebpack(paths.source, cb);
   });
 });
 
