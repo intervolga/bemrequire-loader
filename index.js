@@ -13,14 +13,20 @@ function bemRequireLoader(source) {
 
   const targets = [];
   const self = this;
-  bemFs.forEach((fileName) => {
-    const modulePath = path.resolve(fileName);
-    self.addDependency(modulePath);
-    const request = loaderUtils.stringifyRequest(self, modulePath);
-    targets.push('require(' + request + ')');
+  bemFs.forEach((source) => {
+    if (source['raw']) {
+      targets.push(source['raw']);
+    } else if (source['require']) {
+      const modulePath = path.resolve(source['require']);
+      self.addDependency(modulePath);
+      const request = loaderUtils.stringifyRequest(self, modulePath);
+      targets.push('require(' + request + ');');
+    } else {
+      return Error('Wrong input: ' + JSON.stringify(source));
+    }
   });
 
-  return targets.join(',\n');
+  return targets.join('\n');
 }
 
 module.exports = bemRequireLoader;
